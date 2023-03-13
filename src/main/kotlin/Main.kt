@@ -49,8 +49,7 @@ fun getOperationSymbol(choice: Int): String {
 fun main() {
     Locale.setDefault(Locale.US)
     val scanner = Scanner(System.`in`)
-    val results = mutableListOf<Double>()
-    val operations = mutableListOf<String>()
+    val history = mutableMapOf<String, Double>()
 
     while (true) {
         // Display menu and prompt for choice
@@ -73,18 +72,20 @@ fun main() {
 
         // Display results
         if (choice == 6) {
-            if (results.isEmpty()) {
-                print("No results stored \n")
+            if (history.isEmpty()) {
+                print("No results stored.\n")
             } else {
                 println("\nResults:")
-                for (i in 0 until results.size) {
-                    println("${i + 1}) ${operations[i]} = ${results[i]}")
+                var i = 1
+                for ((operation, result) in history) {
+                    println("$i) $operation = $result")
+                    i++
                 }
             }
             println()
             continue
         }
-//
+
         try {
             // Prompt user for numbers
             println("Enter the first number:")
@@ -103,10 +104,9 @@ fun main() {
                 else -> throw IllegalArgumentException("Invalid operation.")
             }
 
-            // Add result and operation to lists and print result
-            val operation = getOperationSymbol(choice)
-            operations.add("$num1 $operation $num2")
-            results.add(result)
+            // Add result and operation to history map
+            val operation = "$num1" + getOperationSymbol(choice) + "$num2"
+            history[operation] = result
             // Print result
             println()
             println("The result is $result\n")
