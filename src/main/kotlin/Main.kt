@@ -1,13 +1,6 @@
-//fun main(args: Array<String>) {
-//    println("Hello World!")
-//
-//    // Try adding program arguments via Run/Debug configuration.
-//    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-//    println("Program arguments: ${args.joinToString()}")
-//}
-
 import java.util.*
 
+val scanner = Scanner(System.`in`)
 
 // Functions for performing calculations
 fun add(a: Double, b: Double): Double {
@@ -44,11 +37,22 @@ fun getOperationSymbol(choice: Int): String {
         else -> throw IllegalArgumentException("Invalid choice")
     }
 }
-
+// Function to prompt user for a valid double input
+fun promptDouble(prompt: String): Double {
+    while (true) {
+        print(prompt)
+        try {
+            val input = scanner.nextDouble()
+            return input
+        } catch (e: InputMismatchException) {
+            println("Invalid input. Please enter a valid number.")
+            scanner.nextLine()
+        }
+    }
+}
 
 fun main() {
     Locale.setDefault(Locale.US)
-    val scanner = Scanner(System.`in`)
     val history = mutableMapOf<String, Double>()
 
     while (true) {
@@ -88,10 +92,12 @@ fun main() {
 
         try {
             // Prompt user for numbers
-            println("Enter the first number:")
-            val num1 = scanner.nextDouble()
-            println("Enter the second number:")
-            val num2 = scanner.nextDouble()
+//             println("Enter the first number:")
+//             val num1 = scanner.nextDouble()
+//             println("Enter the second number:")
+//             val num2 = scanner.nextDouble()
+            val num1 = promptDouble("Enter the first number: ")
+            val num2 = promptDouble("Enter the second number: ")
             scanner.nextLine()
 
             // Perform operation based on user choice
